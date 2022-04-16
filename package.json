@@ -20,7 +20,7 @@
     "@types/leaflet": "1.7.9",
     "leaflet": "1.7.1",
     "rxjs": "7.4.0",
-    "stream-browserify": "^3.0.0",
+    "snarkdown": "^2.0.0",
     "tslib": "2.3.0",
     "util": "^0.12.4",
     "zone.js": "0.11.4"

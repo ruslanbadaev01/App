@@ -1,6 +1,7 @@
 import { Component, forwardRef, OnInit } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import  snarkdown  from 'snarkdown'
 type EditorTabName = "RAW" | "RESULT"
 
 @Component({
@@ -21,19 +22,27 @@ export class MdEditComponent implements OnInit {
   public editorValue: string = ''
   
   constructor(private domSanitizer: DomSanitizer) { }
-  // public convertMarkdownToHtml(markdown: string): SafeHtml {
-  //   return this.domSanitizer.bypassSecurityTrustHtml(sharkdown(markdown))
-  // }
+  public convertMarkdownToHtml(markdown: string): SafeHtml {
+    return this.domSanitizer.bypassSecurityTrustHtml(snarkdown(markdown))
+  }
   ngOnInit(): void {
   }
 
   public onClickTabButton (tabName: EditorTabName):void{
     this.selectedTabName = tabName
   }
-  public setDisabledState(isDisabled: boolean): void {
-    this.isDisabled = isDisabled
+ 
+  public onChange(markdownValue: string): void {
+  }
+  public onChangeEditorValue(newValue: string): void {
+    this.editorValue = newValue
+    this.onChange(newValue)
   }
   public writeValue(markdown: string): void {
+    if (markdown === null) {
+      return
+    }
+
     this.editorValue = markdown
   }
 }
